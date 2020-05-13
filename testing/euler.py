@@ -15,7 +15,7 @@ y0 = 1  # initial value
 delta = 1  # step size
 end = 10  # x-value to stop integration
 
-steps = end/delta  # FIXME: may need to adjust this
-time = sp.linspace(0, end, steps)
+steps = int(end/delta)
+time = sp.linspace(0, end, steps+1)
 
 # TODO: write integrator
