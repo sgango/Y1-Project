@@ -26,7 +26,7 @@ for i in range(1, steps+1):
 
 plt.plot(x, y, label='Approx. soln (Euler)')
 plt.plot(x, y, 'o')
-# TODO: plot true solution for test cases
 plt.xlabel('x')
 plt.ylabel('y')
 plt.legend()
+plt.show()
