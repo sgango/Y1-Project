@@ -1,5 +1,6 @@
 # Imperial Physics: Year 1 Project
-***Srayan Gangopadhyay and Daniel Buguks***
+
+***Srayan Gangopadhyay and Daniel Buguks***  
 A framework to simulate and visualise the motion of charged particles in electric and magnetic fields.
 
 ---
