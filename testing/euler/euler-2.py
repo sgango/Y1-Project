@@ -13,13 +13,13 @@ Define y' = v so y'' = v'
 """
 
 def func(y, v, x):  # RHS of v' = in terms of y, v, x
-    return np.cos(3*x) - 6*v - 9*y
+    return x + v - 3*y
 
 # PARAMETERS
-y0 = 0.5  # y(x=0) = 
-v0 = 0  # y'(x=0) = 
-delta = 0.1  # step size
-end = 3  # x-value to stop integration
+y0 = 1  # y(x=0) = 
+v0 = -2  # y'(x=0) = 
+delta = 0.01  # step size
+end = 4  # x-value to stop integration
 
 steps = int(end/delta) + 1  # number of steps
 x = np.linspace(0, end, steps)  # array of x-values (discrete time)
