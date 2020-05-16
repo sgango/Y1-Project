@@ -4,8 +4,6 @@ Srayan Gangopadhyay
 2020-05-16
 """
 
-# FIXME: not working! gives incorrect solution
-
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -15,15 +13,15 @@ Define y' = v so y'' = v'
 """
 
 def func(y, v, x):  # RHS of v' = in terms of y, v, x
-    return x + v - 3*y
+    return np.cos(3*x) - 6*v - 9*y
 
 # PARAMETERS
-y0 = 1  # y(x=0) = 
-v0 = -2  # y'(x=0) = 
-delta = 0.01  # step size
-end = 5  # x-value to stop integration
+y0 = 0.5  # y(x=0) = 
+v0 = 0  # y'(x=0) = 
+delta = 0.1  # step size
+end = 3  # x-value to stop integration
 
-steps = int(end/delta) + 1 # number of steps
+steps = int(end/delta) + 1  # number of steps
 x = np.linspace(0, end, steps)  # array of x-values (discrete time)
 y = np.zeros(steps)  # empty array for solution
 v = np.zeros(steps)
@@ -33,7 +31,7 @@ v[0] = v0
 # INTEGRATING
 for i in range(1, steps):
     y[i] = y[i-1] + (delta*v[i-1])
-    v[i] = y[i-1] + (delta*func(y[i-1], v[i-1], x[i-1]))
+    v[i] = v[i-1] + (delta*func(y[i-1], v[i-1], x[i-1]))
 
 plt.plot(x, y, label='Approx. soln (Euler)')
 plt.plot(x, y, 'o')
