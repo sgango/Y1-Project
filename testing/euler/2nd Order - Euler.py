@@ -1,3 +1,7 @@
+"""
+Daniel Buguks
+"""
+
 ### Defining function
 def dxdt(x,v,t):
     return -6*v-9*x+sp.cos(3*t)
