@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 """
+y' = dy/dx
 For a function of form y'' = f(x, y, y')
 Define y' = v so y'' = v'
 """
@@ -30,8 +31,8 @@ v[0] = v0
 
 # INTEGRATING
 for i in range(1, steps):
-    y[i] = y[i-1] + (delta*v[i-1])
     v[i] = v[i-1] + (delta*func(y[i-1], v[i-1], x[i-1]))
+    y[i] = y[i-1] + (delta*v[i-1])
 
 plt.plot(x, y, label='Approx. soln (Euler)')
 plt.plot(x, y, 'o')
