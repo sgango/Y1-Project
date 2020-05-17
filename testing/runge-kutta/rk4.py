@@ -15,13 +15,13 @@ Define y' = v so y'' = v'
 """
 
 def func(x, y, v):  # RHS of v' = in terms of x, y, v
-    return x + v - 3*y
+    return -y
 
 # PARAMETERS
-y0 = 1  # y(x=0) = 
-v0 = -2  # y'(x=0) = 
-h = 0.01  # step size
-end = 4  # x-value to stop integration
+y0 = 0  # y(x=0) = 
+v0 = 1/np.pi  # y'(x=0) = 
+h = 0.1  # step size
+end = 6  # x-value to stop integration
 
 steps = int(end/h)  # number of steps
 x = np.linspace(0, end, steps)  # array of x-values (discrete time)
@@ -48,6 +48,7 @@ for i in range(0, steps-1):
 
 plt.plot(x, y, label='Approx. soln (RK4)')
 plt.plot(x, y, 'o')
+plt.plot(x, np.sin(x)/np.pi, label='True soln')
 plt.xlabel('x')
 plt.ylabel('y')
 plt.legend()
