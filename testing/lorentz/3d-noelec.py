@@ -8,17 +8,28 @@ Srayan Gangopadhyay
 import numpy as np
 import matplotlib.pyplot as plt
 
-def x-lorentz(t, x, vx):  # x-component of equation of motion
-    return (q/m)*(vy*Bz - vz*By)
-    # TODO: add electric field
+# PARAMETERS
+# Physics
+r0 = [0, 0, 0]  # initial position of particle: x, y, z-components
+v0 = [0, 0, 0]  # initial velocity
+B = [0, 0, 1]  # magnetic field
+# TODO: add electric field
+q, m = 1, 2  # charge, mass
+# Runge-Kutta
+h = 0.1  # step size
+end = 6  # t-value to stop integration
 
-def y-lorentz(t, y, vy):
-    return (-q/m)*(vx*Bz - vz*Bx)
+def x_lorentz(t, v, B):  # x-component of equation of motion
+    return (q/m)*(v[2]*B[3] - v[3]*B[2])
 
-def z-lorentz(t, z, vz):
-    return (q/m)*(vx*By - vy*Bx)
+def y_lorentz(t, v, B):
+    return (-q/m)*(v[1]*B[3] - v[3]*B[1])
 
-# TODO: put this integrator in a separate module
+def z_lorentz(t, v, B):
+    return (q/m)*(v[1]*B[2] - v[2]*B[1])
+
+# TODO: do we need a matrix to hold solution?
+
 def rk4(func, init1, init2, h, end):
     # FIXME: change variable names in integrator
     # (do we need to get function arguments?)
@@ -33,6 +44,7 @@ def rk4(func, init1, init2, h, end):
     v = np.zeros(steps)
     y[0] = y0  # inserting initial value
     v[0] = v0
+
     for i in range(0, steps-1):
         k1y = h * v[i]
         k1v = h * func(x[i], y[i], v[i])
@@ -45,15 +57,3 @@ def rk4(func, init1, init2, h, end):
         y[i+1] = y[i] + (k1y + 2*k2y + 2*k3y + k4y) / 6
         v[i+1] = v[i] + (k1v + 2*k2v + 2*k3v + k4v) / 6
     return y
-
-# PARAMETERS
-# Physics
-x0, y0, z0 = 0, 0, 0  # initial position of particle
-vx0, vy0, vz0 = 1, 1, 1  # initial velocity
-Bx, By, Bz = 0, 0, 1  # magnetic field
-q, m = 1, 2  # charge, mass
-# Runge-Kutta
-h = 0.1  # step size
-end = 6  # t-value to stop integration
-steps = int(end/h)  # number of steps
-t = np.linspace(0, end, steps)  # array of t-values (discrete time)
