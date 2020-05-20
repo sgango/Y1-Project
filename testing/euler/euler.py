@@ -4,7 +4,7 @@ Srayan Gangopadhyay
 2020-05-13
 """
 
-import scipy as sp
+import numpy as np
 import matplotlib.pyplot as plt
 
 def func(y):  # RHS of ODE in form dy/dx= 
@@ -16,8 +16,8 @@ delta = 1  # step size
 end = 3  # x-value to stop integration
 
 steps = int(end/delta)  # number of steps
-x = sp.linspace(0, end, steps+1)  # array of x-values
-y = sp.zeros(steps+1)  # empty array for solution
+x = np.linspace(0, end, steps+1)  # array of x-values
+y = np.zeros(steps+1)  # empty array for solution
 y[0] = y0  # inserting initial value
 
 # INTEGRATING
