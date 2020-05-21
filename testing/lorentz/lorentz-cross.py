@@ -1,6 +1,5 @@
 """
 Using Runge-Kutta method to integrate Lorentz force equation
-No elec. field, const. mag. field
 Srayan Gangopadhyay
 2020-05-20
 """
@@ -11,12 +10,12 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # PARAMETERS
 r0 = [0, 0, 0]  # initial position
-v0 = [1, 1, 0]  # initial velocity
-B = [0, 0, 5]  # magnetic field
-E = [0, 0, 1]  # electric field
+v0 = [1, 2, 3]  # initial velocity
+B = [0.1, 0.5, 2.5]  # magnetic field
+E = [4, 1, 2]  # electric field
 q, m = 1, 1  # charge, mass
 h = 0.1  # step size
-end = 20  # t-value to stop integration
+end = 10  # t-value to stop integration
 
 def lorentz(vel):  # returns acceleration
     return (q/m)*(E+np.cross(vel, B))
@@ -64,3 +63,4 @@ ax.plot3D(r[0], r[1], r[2])
 ax.set_xlabel('x')
 ax.set_ylabel('y')
 ax.set_zlabel('z')
+plt.show()
