@@ -1,4 +1,4 @@
-### Jupyer Notebooks ###
+### Jupyter Notebooks ###
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 
@@ -6,7 +6,7 @@
 profile_default/
 ipython_config.py
 
-### VisualStudioCode ###
+### Visual Studio Code ###
 **/.vscode/*
 
 ### VisualStudioCode Patch ###
