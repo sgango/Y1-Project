@@ -7,7 +7,8 @@ A framework to simulate and visualise the motion of charged particles in electri
 
 ## Repository management
 
-**/dev**: for now, all code goes in here, in a relevant folder  
-**/ntbks**: Jupyter Notebooks for testing and demonstration
+**/dev**: for unfinished code, or anything that won't be used in the final product  
+**/ntbks**: Jupyter Notebooks for testing and demonstration  
+**/y1project**: finished modules go in here
 
-- **Create a new branch for whatever you're working on.**
+- **Create a new branch for whatever you're working on and merge it with a pull request.**
