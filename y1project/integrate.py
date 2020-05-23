@@ -14,7 +14,7 @@ def euler(func, init1, init2, h, end):
      step size and end point, and integrates using the Euler method.
      Returns solution in an array.
 
-     r'' = f(t, r, v) where v = r'
+     r'' = f(v) where v = r'
 
      func: the function to be integrated
      init1: value of r at t=0
@@ -40,7 +40,7 @@ def rk4(func, init1, init2, h, end):
      step size and end point, and integrates using the 4th-order
      Runge-Kutta algorithm. Returns solution in an array.
 
-     r'' = f(t, r, v) where v = r'
+     r'' = f(v) where v = r'
 
      func: the function to be integrated
      init1: value of r at t=0
