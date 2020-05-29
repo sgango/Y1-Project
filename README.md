@@ -1,7 +1,9 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/sgango/y1-project/badge?s=3379d2c96618c35ee74140bce62f972780f0a727)](https://www.codefactor.io/repository/github/sgango/y1-project)
+
 # Imperial Physics: Year 1 Project
 
 ***Srayan Gangopadhyay and Daniel Buguks***  
-A framework to simulate and visualise the motion of charged particles in electric and magnetic fields.
+A Python framework to simulate and visualise the motion of charged particles in electric and magnetic fields.  
 
 ---
 
