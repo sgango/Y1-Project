@@ -1,0 +1,35 @@
+name: y1project
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - conda-package-handling=1.6.1=py37h7b6447c_0
+  - ipykernel=5.1.4=py37h39e3cac_0
+  - ipython=7.13.0=py37h5ca1d4c_0
+  - ipython_genutils=0.2.0=py37_0
+  - ipywidgets=7.5.1=py_0
+  - jupyter=1.0.0=py37_7
+  - jupyter_client=6.1.3=py_0
+  - jupyter_console=6.1.0=py_0
+  - jupyter_core=4.6.3=py37_0
+  - matplotlib=3.1.3=py37_0
+  - matplotlib-base=3.1.3=py37hef1b27d_0
+  - nbconvert=5.6.1=py37_0
+  - nbformat=5.0.6=py_0
+  - notebook=6.0.3=py37_0
+  - numpy=1.18.1=py37h4f9e942_0
+  - numpy-base=1.18.1=py37hde5b4d6_1
+  - pandas=1.0.3=py37h0573a6f_0
+  - pip=20.0.2=py37_3
+  - python=3.7.7=hcff3b4d_5
+  - python-dateutil=2.8.1=py_0
+  - python_abi=3.7=1_cp37m
+  - scipy=1.4.1=py37h0b6359f_0
+  - seaborn=0.10.1=py_0
+  - tabulate=0.8.7=pyh9f0ad1d_0
+  - tqdm=4.46.1=pyh9f0ad1d_0
+  - widgetsnbextension=3.5.1=py37_0
+  - yaml=0.1.7=had09818_2
+  - pip:
+    - celluloid==0.2.0
+prefix: /home/srayan/miniconda3/envs/y1project
