@@ -46,7 +46,7 @@ def rk4(func, init1, init2, h, end, E_field, B_field, q, m, size):
     init2: value of v at t=0
     h: step size
     end: t-value to stop integrating
-    E_field: electric field function  # TODO: generalise these
+    E_field: electric field function
     B_field: magnetic field function
     q: charge
     m: mass
@@ -70,18 +70,9 @@ def rk4(func, init1, init2, h, end, E_field, B_field, q, m, size):
         new_r = r[:,i] + (k1r + 2*k2r + 2*k3r + k4r) / 6
         new_v = v[:,i] + (k1v + 2*k2v + 2*k3v + k4v) / 6
 
-        if (new_r[0] < size[0]*-0.5):  # stop particle leaving box
-            new_r[0] += size[0]        # TODO: is there a neater way?
-        if (new_r[0] >= size[0]*0.5):  # we could just use modulo
-            new_r[0] -= size[0]
-        if (new_r[1] < size[1]*-0.5):
-            new_r[1] += size[1]
-        if (new_r[1] >= size[1]*0.5):
-            new_r[1] -= size[1]
-        if (new_r[2] < size[2]*-0.5):
-            new_r[2] += size[2]
-        if (new_r[2] >= size[2]*0.5):
-            new_r[2] -= size[2]
+        new_r[0] = new_r[0] % size[0]  # periodic boundary conditions
+        new_r[1] = new_r[1] % size[1]
+        new_r[2] = new_r[2] % size[2]
 
         r[:,i+1] = new_r
         v[:,i+1] = new_v
@@ -148,20 +139,9 @@ def plot_or_anim(r, frames, fig, ax, anim):
         ax.plot(r[0], r[1], r[2], '.', color='magenta')
         plt.show()
     else:
-        global pbar
         pbar = tqdm(total=frames+1, desc='Animating')  # start progress bar
         animat = animation.FuncAnimation(fig, animate, fargs=(ax, r, pbar),
                                          frames=frames, interval=50,
                                          blit=False, repeat=False)
         display(HTML(animat.to_html5_video()))
         pbar.close()  # close progress bar
-
-def main():
-    r, v = rk4(lorentz, r0, v0, h, end)
-    plot_or_anim(r, frames, *plotsetup(r), anim=True)
-    printout(r, v)
-    # textout(r, v)
-
-if __name__ == "__main__":
-    main()
-
