@@ -6,8 +6,8 @@ Srayan Gangopadhyay
 
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation as animation
+from mpl_toolkits.mplot3d import Axes3D
 from IPython.display import HTML, display  # show anim. in ntbk
 from tabulate import tabulate  # pretty text output
 from datetime import datetime  # timestamp for output files
@@ -19,36 +19,22 @@ m_el = 9.109e-31  # electron mass (kg)
 e = 1.602e-19  # elementary charge (C)
 Re = 6.37e6  # Earth radius (m)
 
-# PARAMETERS
-r0 = [1e7,1e7, 0]  # initial position
-v0 = [1e7, 1e7, 0]  # initial velocity
-q = e  # charge
-m = m_pr  # mass
-h = 0.01  # step size
-end = 20  # t-value to stop integration
-size = [np.inf, np.inf, np.inf]  # simulation dimensions
-frames = 100  # for animation
-tableprint = True  # switch textout on/off
-export = False  # switch data dump on/off
-
-def B_field(r):
-    """Returns the components of the magnetic
-    field, given a 3D position vector."""
-    return [1e-9, 1e-16, 2e-8]
-
-def E_field(r):
-    """Returns the components of the electric
-    field, given a 3D position vector."""
-    return [0,0,0]
-
-def lorentz(r, vel, E, B):
+def lorentz(r, vel, E, B, q, m):
     """The Lorentz force equation. Returns
-    acceleration of particle given its
-    position, velocity, E field
-    function, and B field function."""
+    acceleration of particle.
+
+    Parameters:
+    r - 3D position vector
+    vel - 3D velocity vector
+    E - electric field function
+    B - magnetic field function
+    q - charge
+    m - mass
+
+    All in standard SI units."""
     return (q/m)*(E(r) + np.cross(vel, B(r)))
 
-def rk4(func, init1, init2, h, end):
+def rk4(func, init1, init2, h, end, E_field, B_field, q, m, size):
     """Takes the RHS of a 2nd-order ODE with initial conditions,
     step size and end point, and integrates using the 4th-order
     Runge-Kutta algorithm. Returns solution in an array.
@@ -60,6 +46,11 @@ def rk4(func, init1, init2, h, end):
     init2: value of v at t=0
     h: step size
     end: t-value to stop integrating
+    E_field: electric field function  # TODO: generalise these
+    B_field: magnetic field function
+    q: charge
+    m: mass
+    size: simulation dimensions (array/list)
     """
     steps = int(end/h)  # number of steps
     r = np.zeros((3, steps))  # empty matrix for solution
@@ -69,19 +60,19 @@ def rk4(func, init1, init2, h, end):
 
     for i in tqdm(range(0, steps-1), desc='Integrating'):
         k1r = h * v[:,i]
-        k1v = h * func(r[:,i], v[:,i], E_field, B_field)
+        k1v = h * func(r[:,i], v[:,i], E_field, B_field, q, m)
         k2r = h * (v[:,i] + 0.5*k1v)
-        k2v = h * func(r[:,i], v[:,i] + 0.5*k1v, E_field, B_field)
+        k2v = h * func(r[:,i], v[:,i] + 0.5*k1v, E_field, B_field, q, m)
         k3r = h * (v[:,i] + 0.5*k2v)
-        k3v = h * func(r[:,i], v[:,i] + 0.5*k2v, E_field, B_field)
+        k3v = h * func(r[:,i], v[:,i] + 0.5*k2v, E_field, B_field, q, m)
         k4r = h * (v[:,i] + k3v)
-        k4v = h * func(r[:,i], v[:,i] + k3v, E_field, B_field)
+        k4v = h * func(r[:,i], v[:,i] + k3v, E_field, B_field, q, m)
         new_r = r[:,i] + (k1r + 2*k2r + 2*k3r + k4r) / 6
         new_v = v[:,i] + (k1v + 2*k2v + 2*k3v + k4v) / 6
-        
+
         if (new_r[0] < size[0]*-0.5):  # stop particle leaving box
             new_r[0] += size[0]        # TODO: is there a neater way?
-        if (new_r[0] >= size[0]*0.5):
+        if (new_r[0] >= size[0]*0.5):  # we could just use modulo
             new_r[0] -= size[0]
         if (new_r[1] < size[1]*-0.5):
             new_r[1] += size[1]
@@ -91,13 +82,14 @@ def rk4(func, init1, init2, h, end):
             new_r[2] += size[2]
         if (new_r[2] >= size[2]*0.5):
             new_r[2] -= size[2]
-            
+
         r[:,i+1] = new_r
         v[:,i+1] = new_v
     return r, v
 
 def calcmod(r, v):
-    """Calculates modulus of vectors."""
+    """Calculates modulus of vectors.
+    Returns arrays of distances and speeds."""
     distances = np.linalg.norm(r, axis=0)
     speeds = np.linalg.norm(v, axis=0)
     return distances, speeds
@@ -106,10 +98,10 @@ def printout(r, v):
     """Prints out basic stats in table
     form."""
     distances, speeds = calcmod(r, v)
-    print("\n",tabulate([['Max. distance', np.amax(distances)], 
-                     ['Avg. distance', np.mean(distances)], 
-                     ['Max. speed', np.amax(speeds)], 
-                     ['Avg. speed', np.mean(speeds)]], 
+    print("\n",tabulate([['Max. distance', np.amax(distances)],
+                     ['Avg. distance', np.mean(distances)],
+                     ['Max. speed', np.amax(speeds)],
+                     ['Avg. speed', np.mean(speeds)]],
                     headers=['Parameter', 'Value']))
 
 def textout(r, v):
@@ -129,8 +121,11 @@ def textout(r, v):
     print("\nExported full data to ",filename)
 
 def plotsetup(r):
-    """Creates a figure and set of axes
-    ready for plotting/animation."""
+    """Returns figure and set of 3D axes
+    ready for plotting/animation. Axis limits
+    are automatically set, given an array
+    of position vectors.
+    """
     fig = plt.figure()  # generate a figure
     ax = fig.add_subplot(111, projection='3d')  # set up 3d axes
     ax.set_xlabel('x')
@@ -147,27 +142,26 @@ def animate(i, ax, r, pbar):
     j = 100*i  # to skip frames and change animation speed
     ax.plot3D(r[0, :j], r[1, :j], r[2, :j], '.', color='magenta')
     pbar.update(1)  # increment progress bar
-    
-def plot_or_anim(r, frames, anim, fig, ax):
+
+def plot_or_anim(r, frames, fig, ax, anim):
     if not anim:
-        Axes3D.plot(r[0], r[1], r[2], '.', color='magenta')
-        Axes3D.show()
+        ax.plot(r[0], r[1], r[2], '.', color='magenta')
+        plt.show()
     else:
         global pbar
-        frames = int((end/h)/100)
         pbar = tqdm(total=frames+1, desc='Animating')  # start progress bar
         animat = animation.FuncAnimation(fig, animate, fargs=(ax, r, pbar),
-                                         frames=frames, interval=50, 
+                                         frames=frames, interval=50,
                                          blit=False, repeat=False)
         display(HTML(animat.to_html5_video()))
         pbar.close()  # close progress bar
 
 def main():
-    r, v = rk4(lorentz, r0, v0, h, end)  # call the integrator
-    fig, ax = plotsetup(r)
-    plot_or_anim(r, frames, fig, ax)
-    if tableprint: printout(r, v)
-    if export: textout(r, v)
+    r, v = rk4(lorentz, r0, v0, h, end)
+    plot_or_anim(r, frames, *plotsetup(r), anim=True)
+    printout(r, v)
+    # textout(r, v)
 
 if __name__ == "__main__":
     main()
+
