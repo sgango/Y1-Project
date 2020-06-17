@@ -1,0 +1,15 @@
+name: y1project
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - jupyter=1.0.0
+  - matplotlib=3.1.3
+  - numpy=1.18.1
+  - pip=20.0.2
+  - python=3.7.7
+  - scipy=1.4.1
+  - tabulate=0.8.7
+  - tqdm=4.46.1
+  - pip:
+    - celluloid==0.2.0
