@@ -140,12 +140,12 @@ def plotsetup(r):
 def animate(i, ax, r, pbar):
     """Called by FuncAnimation to plot each frame."""
     j = 100*i  # to skip frames and change animation speed
-    ax.plot3D(r[0, :j], r[1, :j], r[2, :j], color='magenta')
+    ax.plot3D(r[0, :j], r[1, :j], r[2, :j], ',', color='magenta')
     pbar.update(1)  # increment progress bar
 
 def plot_or_anim(r, frames, fig, ax, anim):
     if not anim:
-        ax.plot(r[0], r[1], r[2], color='magenta')
+        ax.plot(r[0], r[1], r[2], ',', color='magenta')
         plt.show()
     else:
         pbar = tqdm(total=frames+1, desc='Animating')  # start progress bar
