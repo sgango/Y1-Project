@@ -70,9 +70,18 @@ def rk4(func, init1, init2, h, end, E_field, B_field, q, m, size):
         new_r = r[:,i] + (k1r + 2*k2r + 2*k3r + k4r) / 6
         new_v = v[:,i] + (k1v + 2*k2v + 2*k3v + k4v) / 6
 
-        new_r[0] = new_r[0] % size[0]  # periodic boundary conditions
-        new_r[1] = new_r[1] % size[1]
-        new_r[2] = new_r[2] % size[2]
+        if (new_r[0] < size[0]*-0.5):  # stop particle leaving box
+            new_r[0] += size[0]
+        if (new_r[0] >= size[0]*0.5):
+            new_r[0] -= size[0]
+        if (new_r[1] < size[1]*-0.5):
+            new_r[1] += size[1]
+        if (new_r[1] >= size[1]*0.5):
+            new_r[1] -= size[1]
+        if (new_r[2] < size[2]*-0.5):
+            new_r[2] += size[2]
+        if (new_r[2] >= size[2]*0.5):
+            new_r[2] -= size[2]
 
         r[:,i+1] = new_r
         v[:,i+1] = new_v
