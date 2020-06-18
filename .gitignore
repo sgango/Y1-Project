@@ -1,14 +1,7 @@
-### Jupyter Notebooks ###
+
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 
-# IPython
-profile_default/
-ipython_config.py
+__pycache__/
 
-### Visual Studio Code ###
 **/.vscode/*
-
-### VisualStudioCode Patch ###
-# Ignore all local history of files
-.history
