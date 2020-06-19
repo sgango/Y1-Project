@@ -1,8 +1,7 @@
 # Year 1 Project
 *(MSci Physics at Imperial College London)*
 
-
-Authors: ***Daniel Buguks and Srayan Gangopadhyay***
+Authors: **Daniel Buguks and Srayan Gangopadhyay**
 
 A Python module for visualising the trajectories of charged particles in electric and magnetic fields.  
 
@@ -10,7 +9,7 @@ A Python module for visualising the trajectories of charged particles in electri
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/sgango/Y1-Project/master?filepath=demo.ipynb)
 
-Click this button to launch a notebook with examples **(work in progress)**.
+Click this button to launch a notebook with examples.
 
 ## Known issues
 
