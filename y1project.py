@@ -13,15 +13,10 @@ from tabulate import tabulate  # pretty text output
 from datetime import datetime  # timestamp for output files
 from tqdm.auto import tqdm  # progress bar
 
-# CONSTANTS
-m_pr = 1.67e-27  # proton mass (kg)
-m_el = 9.109e-31  # electron mass (kg)
-e = 1.602e-19  # elementary charge (C)
-Re = 6.37e6  # Earth radius (m)
-
 def lorentz(r, vel, E, B, q, m):
     """The Lorentz force equation. Returns
-    acceleration of particle.
+    acceleration of particle. All in 
+    standard SI units.
 
     Parameters:
     r - 3D position vector
@@ -30,8 +25,7 @@ def lorentz(r, vel, E, B, q, m):
     B - magnetic field function
     q - charge
     m - mass
-
-    All in standard SI units."""
+    """
     return (q/m)*(E(r) + np.cross(vel, B(r)))
 
 def rk4(func, init1, init2, h, end, E_field, B_field, q, m, size):
@@ -95,8 +89,8 @@ def calcmod(r, v):
     return distances, speeds
 
 def printout(r, v):
-    """Prints out basic stats in table
-    form."""
+    """Prints out basic stats in 
+    table form."""
     distances, speeds = calcmod(r, v)
     print("\n",tabulate([['Max. distance', np.amax(distances)],
                      ['Avg. distance', np.mean(distances)],
@@ -131,7 +125,7 @@ def plotsetup(r):
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
-    ax.view_init(30, -113)  # change viewing angle
+    # ax.view_init(30, -113)  # change viewing angle
     ax.set_xlim3d(np.amin(r[0]), np.amax(r[0]))  # auto-scale axes
     ax.set_ylim3d(np.amin(r[1]), np.amax(r[1]))
     ax.set_zlim3d(np.amin(r[2]), np.amax(r[2]))
