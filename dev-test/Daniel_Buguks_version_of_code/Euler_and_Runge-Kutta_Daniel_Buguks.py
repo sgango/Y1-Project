@@ -1,5 +1,5 @@
 """
-@author: Daniel
+@author: Daniel Buguks
 """
 import scipy as sp
 import matplotlib.pyplot as plt
