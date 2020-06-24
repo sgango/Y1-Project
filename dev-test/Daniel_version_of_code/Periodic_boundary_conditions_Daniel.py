@@ -1,7 +1,7 @@
 
 """
 
-@author: Daniel Buguks
+@author: Daniel
 
 """
 import scipy as sp
