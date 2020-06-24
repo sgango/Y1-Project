@@ -1,7 +1,7 @@
 
 """
 
-@author: Danila
+@author: Daniel
 
 """
 
