@@ -1,16 +1,11 @@
-# -*- coding: utf-8 -*-
+
 """
-Created on Wed Jun 24 02:43:11 2020
 
 @author: Danila
-"""
-
 
 """
 
-@author: Daniel Buguks
 
-"""
 import scipy as sp
 import numpy as np
 import matplotlib.pyplot as plt
